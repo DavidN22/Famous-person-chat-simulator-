@@ -13,7 +13,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-require('dotenv').config();
+
 const app = express();
 const conversationHistory = {
   "Joe Rogan": [],
@@ -21,7 +21,6 @@ const conversationHistory = {
 };
 
 app.use(express.static('public'));
-
 
 
 app.post('/api/audio', express.json(), async (req, res) => {
@@ -35,8 +34,6 @@ app.post('/api/audio', express.json(), async (req, res) => {
 
 });
 
-
-
 app.post('/api/text', express.json(), async (req, res) => {
 
   res.send(responses);
@@ -46,20 +43,7 @@ app.listen(PORT, async () => {
   console.log(`Server listening on port ${PORT}`);
 
   // Define your async function for fetching data from the API
-  async function fetchData() {
-   
-    const response = await openai.listModels();
- const modelIds = response.data.data.map(model => model.id);
- modelIds.forEach(modelId => {
-  if (modelId.includes('4')) {
-    console.log('Data fetched:', modelId);
-  }
-});
-   
-
-  }
-  await fetchData();
-});
+} );
 
 async function getChatGPTResponse(person, question) {
   const history = conversationHistory[person].map(entry => entry.content).join('\n');
@@ -126,8 +110,6 @@ app.get('/userInfo', express.json(), async (req, res) => {
   res.json(response.data.subscription);
   
   });
-
-
 
 
 // Conversation history for the chatbot

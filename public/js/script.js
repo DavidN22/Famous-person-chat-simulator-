@@ -1,12 +1,60 @@
 import { playAIResponseAudio, stopAudio } from './audioHandler.js';
 import { createMessageElement } from './createMessageElement.js';
 import { createTypingIndicatorElement } from './createTypingIndicatorElement.js';
-
+import { initializeSpeechRecognition } from './speechRecognition.js';
 const famousPersonSelectItems = document.querySelectorAll('.famousPerson-select-item');
 const userInput = document.getElementById('user-input');
 const submitButton = document.getElementById('submit-button');
 const chatLog = document.getElementById('chat-log');
 const characterCountElement = document.getElementById('character-count');
+
+
+
+const toggleButton = document.getElementById('microphone-button');
+
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+
+recognition.lang = 'en-US';
+recognition.interimResults = false;
+
+let isListening = false;
+
+toggleButton.addEventListener('click', () => {
+    if (!isListening) {
+        recognition.start();
+       
+    } else {
+        recognition.stop();
+      
+    }
+    isListening = !isListening;
+});
+
+recognition.addEventListener('result', (event) => {
+    const text = event.results[0][0].transcript;
+    if (userInput.value.length > 0) {
+      userInput.value += ' ' + text;
+  } else {
+      userInput.value = text;
+  }
+});
+
+recognition.addEventListener('end', () => {
+    if (isListening) {
+        recognition.start();
+    }
+});
+
+recognition.addEventListener('error', (event) => {
+    console.error('Error in speech recognition:', event.error);
+});
+
+
+initializeSpeechRecognition(userInput, toggleButton, submitButton);
+
+
 
 let currentFamousPerson = '';
 

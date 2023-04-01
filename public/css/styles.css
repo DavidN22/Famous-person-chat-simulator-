@@ -121,33 +121,6 @@ body {
   box-sizing: border-box;
 }
 
-.controls {
-  display: flex;
-  align-items: center;
-}
-
-input[type='text'] {
-  border-radius: 3px;
-  border: 1px solid #444;
-  background-color: #222;
-  color: #ccc;
-  padding: 10px;
-  width: 93%;
-  margin-right: 10px;
-  font-size: 16px
-}
-
-button {
-  font-size: 16px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  background-color: #333;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  margin-left: auto;
-}
 
 button:hover {
   background-color: #555;
@@ -260,4 +233,80 @@ display: flex;
   margin-left: 20px;
   font-size: 14px;
   color: #ccc;
+
 }
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+  }
+}
+
+.microphone-on {
+  animation: pulse 2s infinite;
+}
+
+.microphone-icon {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  margin: 0;
+position: absolute;
+  right: 8px;
+}
+
+.microphone-icon:hover {
+  color: red;
+}
+
+.input-container {
+  background-color: #222;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-right: 20px;
+  /* Adjust this value according to your desired input width */
+  border: 1px solid #ccc; /* Add a border to match the input field's border */
+  /* Add a border-radius to match the input field's border-radius */
+}
+
+input[type='text'] {
+  border-radius: 3px;
+  border: 1px solid #444;
+  background-color: #222;
+  color: #ccc;
+  padding: 10px;
+  width: 100%;
+padding-right: 5.5%;
+  font-size: 16px
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+
+button {
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #333;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+ 
+}
+
+

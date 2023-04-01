@@ -39,17 +39,23 @@
           </div>
         </div>
        <div class="controls">
-  <input type="text" id="user-input">
+        <div class="input-container">
+          <input type="text" id="user-input">
+          <button id="microphone-button" class="microphone-icon">🎤</button>
+          
+        </div>
   <button id="submit-button">Send</button>
   <span id="character-count" class="character-count"></span>
 </div>
       </div>
+      
     </div>
 
     <audio id="audioPlayer" controls style="display: none;"></audio>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/script.js" type="module"></script>
+    <script type="module" src="js/speechRecognition.js"></script>
 
 </body>
 </html>

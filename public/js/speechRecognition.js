@@ -4,15 +4,9 @@ const recognition = new SpeechRecognition();
 recognition.lang = 'en-US';
 recognition.interimResults = false;
 
-export function initializeSpeechRecognition(userInput, toggleButton, sendButton) {
+export function initializeSpeechRecognition(userInput, toggleButton) {
   toggleButton.addEventListener('click', () => {
-    toggleSpeechRecognition(toggleButton);
-  });
-
-  sendButton.addEventListener('click', () => {
-    if (isListening) {
-      toggleSpeechRecognition(toggleButton);
-    }
+    toggleSpeechRecognition(userInput, toggleButton);
   });
 
   recognition.addEventListener('result', (event) => {
@@ -26,7 +20,7 @@ export function initializeSpeechRecognition(userInput, toggleButton, sendButton)
 
   recognition.addEventListener('end', () => {
     if (isListening) {
-      toggleSpeechRecognition();
+      toggleSpeechRecognition(userInput, toggleButton);
     }
   });
 
@@ -35,9 +29,10 @@ export function initializeSpeechRecognition(userInput, toggleButton, sendButton)
   });
 }
 
+
 let isListening = false;
 
-function toggleSpeechRecognition(toggleButton) {
+function toggleSpeechRecognition(userInput, toggleButton) {
   if (!isListening) {
     recognition.start();
     toggleButton.classList.add('microphone-on');

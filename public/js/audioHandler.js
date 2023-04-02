@@ -1,6 +1,12 @@
+
 let currentAudio;
 let muteState = false;
 
+export async function processAudioResponse(audioResponse) {
+  const audioBlob = await audioResponse.blob();
+  const audioUrl = URL.createObjectURL(audioBlob);
+  return audioUrl;
+}
 export function playAIResponseAudio(audioUrl) {
   if (currentAudio) {
     currentAudio.pause();

@@ -1,60 +1,18 @@
-import { playAIResponseAudio, stopAudio } from './audioHandler.js';
+import { playAIResponseAudio, stopAudio,processAudioResponse } from './audioHandler.js';
 import { createMessageElement } from './createMessageElement.js';
 import { createTypingIndicatorElement } from './createTypingIndicatorElement.js';
 import { initializeSpeechRecognition } from './speechRecognition.js';
+
+
 const famousPersonSelectItems = document.querySelectorAll('.famousPerson-select-item');
 const userInput = document.getElementById('user-input');
 const submitButton = document.getElementById('submit-button');
 const chatLog = document.getElementById('chat-log');
 const characterCountElement = document.getElementById('character-count');
 
-
-
 const toggleButton = document.getElementById('microphone-button');
 
-
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
-
-recognition.lang = 'en-US';
-recognition.interimResults = false;
-
-let isListening = false;
-
-toggleButton.addEventListener('click', () => {
-    if (!isListening) {
-        recognition.start();
-       
-    } else {
-        recognition.stop();
-      
-    }
-    isListening = !isListening;
-});
-
-recognition.addEventListener('result', (event) => {
-    const text = event.results[0][0].transcript;
-    if (userInput.value.length > 0) {
-      userInput.value += ' ' + text;
-  } else {
-      userInput.value = text;
-  }
-});
-
-recognition.addEventListener('end', () => {
-    if (isListening) {
-        recognition.start();
-    }
-});
-
-recognition.addEventListener('error', (event) => {
-    console.error('Error in speech recognition:', event.error);
-});
-
-
-initializeSpeechRecognition(userInput, toggleButton, submitButton);
-
-
+initializeSpeechRecognition(userInput, toggleButton);
 
 let currentFamousPerson = '';
 
@@ -82,19 +40,17 @@ userInput.addEventListener('keydown', (e) => {
     handleSubmit();
   }
 });
-await get();
-async function get() {
-  const response = await fetch("/userInfo", {
-    method: 'GET',
-  });
-  const data = await response.json();
+  await get();
+  async function get() {
+    const response = await fetch("/userInfo", {
+      method: 'GET',
+    });
+    const data = await response.json();
 
-  const remainingCharacters = data.character_limit - data.character_count;
-  characterCountElement.textContent = `Remaining characters: ${remainingCharacters}`;
-  return remainingCharacters;
-}
-
-
+    const remainingCharacters = data.character_limit - data.character_count;
+    characterCountElement.textContent = `Remaining characters: ${remainingCharacters}`;
+    return remainingCharacters;
+  }
 
 
 
@@ -132,10 +88,12 @@ async function handleSubmit() {
   addToChatLog(typingIndicator);
 
   const audioResponse = await send('/api/audio', currentFamousPerson, question);
-  const audioBlob = await audioResponse.blob();
-  const audioUrl = createAudioUrl(audioBlob);
+
+  const audioUrl = await processAudioResponse(audioResponse);
 
   playAIResponseAudio(audioUrl);
+
+  
 
   const previousMuteButton = chatLog.querySelector('.mute-button');
   if (previousMuteButton) {
@@ -156,8 +114,5 @@ async function handleSubmit() {
 function addToChatLog(messageElement) {
   chatLog.appendChild(messageElement);
   chatLog.scrollTop = chatLog.scrollHeight;
-}
-function createAudioUrl(audioBlob) {
-  return URL.createObjectURL(audioBlob);
 }
 

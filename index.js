@@ -98,12 +98,13 @@ async function getVoices() {
 
 }
 
-app.get('/userInfo', express.json(), async (req, res) => {
+app.get('/userInfo', express.json(), async (req,res) => {
   
    
   const url = 'https://api.elevenlabs.io/v1/user';
   const headers = {
     'xi-api-key': ELEVEN_API_KEY,
+    
   };
   const response = await axios.get(url, { headers });
   

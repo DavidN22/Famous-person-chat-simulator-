@@ -1,65 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>famousPerson Chat Simulator</title>
-    <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-dark.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>famousPerson Chat Simulator</title>
+  <link rel="shortcut icon" href="#">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-dark.min.css">
 </head>
+
+
 <body>
- 
-  <video class="background-video" autoplay loop muted>
-    <source src="vecteezy_technology-internet-of-things-concept__892.mp4" type="video/mp4">
-</video>
- 
-      
-    <div class="container">
-      <div class="famousPerson-select-container">
-        <div class="famousPerson-select-item" data-name="Joe Rogan">
-            <img src="joeRogan.png" alt="Joe Rogan">
-            Joe Rogan
-          </div>
-
-        <div class="famousPerson-select-item" data-name="Trump">
-            <img src="Donald_Trump_circle.png" alt="Trump">
-            Trump
-          </div>
-          
-
-        <!-- Add more famousPersons here -->
+  <header>
+    <div class="header-content">
+      <div class="left-section">
+        <h1>Famous Person Simulator</h1>
+        <p>Made by David Naymon</p>
       </div>
-      <div class="chat-container">
-        <div class="chat-log" id="chat-log">
-        <div class="typing-indicator" id="typing-indicator" style="display:none;">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-       <div class="controls">
-        <div class="input-container">
-          <input type="text" id="user-input">
-          <button id="microphone-button" class="microphone-icon">🎤</button>
-          
-        </div>
-  <button id="submit-button">Send</button>
-  <span id="character-count" class="character-count"></span>
-</div>
+      <div class="right-section">
+
+        <span class="dark-mode-tooltip">
+  ?
+  <span class="tooltip-text">Toggle Dark Mode</span>
+</span>
+        <label for="dark-mode-switch" class="switch">
+          <input type="checkbox" id="dark-mode-switch">
+          <span class="slider round"></span>
+        </label>
+
+        <p class="dark-mode-text">Dark Mode: Off</p>
       </div>
-      
     </div>
+  </header>
+  <div class="container">
+    <div class="famousPerson-select-container">
+      <input id = "searchbar" type="text" placeholder="search">
+      <button id="add-voice-button" class="add-voice-button">Add AI / User</button>
+      
+
+      <!-- Add more famousPersons here -->
+    </div>
+    <div class="chat-container">
+      <div class="chat-log" id="chat-log">
+        <div class="typing-indicator" id="typing-indicator" style="display:none;">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="controls-Container">
+        <div class="controls">
+          <div class="input-container">
+            <textarea id="user-input" placeholder="Send a message..."></textarea>
+           
+            <button id="microphone-button" class="microphone-icon">🎤</button>
+            
+          </div>
+
+          <div class="button-Container">
+           
+              <label class="switch2">
+                <input type="checkbox" id="audio-toggle-switch">
+                <span class="slider2 round"></span>
+              </label>
+              <span class="switch-text">Text Only: Off</span>
+           
+            
+          <button id="submit-button">Send</button>
+          </div>
+          
+          <span id="character-count" class="character-count"></span>
+        </div>
+      </div>
+    </div>
+    <title>Modern Voice Form</title>
+    </head>
+    <div id="add-voice-form-container" class="add-voice-form-container hidden">
+      <div class="holding-container">
+        <div class="sections-container">
+          <div id="action-section" class="section">
+            <h3>Add Voice</h3>
+            <form id="action-form">
+              <label for="action-dropdown">Choose Action:</label>
+              <select id="action-dropdown">
+                <option value="upload">Upload Voice</option>
+                <option value="delete">Delete Voice</option>
+              </select>
+            </form>
+    
+            <div id="upload-section" class="hidden">
+              <form id="upload-voice-form">
+                <label for="voice-name">Voice Name:</label>
+                <input type="text" id="voice-name" name="voice-name">
+                <label for="voice-file">Audio File:</label>
+                <input type="file" id="voice-file" name="voice-file">
+                <button type="submit" id="submit-voice-button">Submit</button>
+              </form>
+            </div>
+    
+            <div id="delete-section" class="hidden">
+              <form id="delete-voice-form">
+                <label for="delete-dropdown">Delete Voice:</label>
+                <select id="delete-dropdown">
+                  <!-- The dropdown menu will be populated with available voices to delete -->
+                </select>
+                <button type="delete" id="delete-voice-button">Delete</button>
+              </form>
+            </div>
+    
+          </div>
+    
+          <div class="or-divider">
+            <span>OR</span>
+          </div>
+    
+          <div id="api-section" class="section">
+            <h3>Import from API</h3>
+            <form id="import-api-form">
+              <label for="api-dropdown">API Voices:</label>
+              <select id="api-dropdown">
+                <!-- The dropdown menu will be populated with the API data in the future -->
+              </select>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+    
+        </div>
+    
+        <button type="button" id="cancel-add-voice">Cancel</button>
+      </div>
+    </div>
+    
 
     <audio id="audioPlayer" controls style="display: none;"></audio>
-    
+
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/script.js" type="module"></script>
     <script type="module" src="js/speechRecognition.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </body>
+
 </html>
-
-
-

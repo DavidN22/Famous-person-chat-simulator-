@@ -1,5 +1,5 @@
 // createMessageElement.js
-import { handleMuteButtonClick, muteState } from './audioHandler.js';
+import { createMuteButton,createReplayButton } from './audioHandler.js';
 
 export function createMessageElement(text, role, audioUrl, messageType = '') {
   const messageElement = document.createElement('div');
@@ -16,12 +16,10 @@ export function createMessageElement(text, role, audioUrl, messageType = '') {
   messageElement.appendChild(messageText);
 
   if (role === 'ai' && audioUrl) {
-    const muteButton = document.createElement('button');
-    muteButton.classList.add('mute-button');
-    muteButton.textContent = muteState ? '🔈' : '🔊';
-    muteButton.dataset.audioUrl = audioUrl;
-    muteButton.addEventListener('click', handleMuteButtonClick);
+    const muteButton = createMuteButton(audioUrl);
+    const replayButton = createReplayButton(audioUrl);
     messageElement.appendChild(muteButton);
+    messageElement.appendChild(replayButton);
   }
 
   return messageElement;

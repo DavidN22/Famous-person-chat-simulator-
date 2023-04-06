@@ -6,21 +6,27 @@ const cancelAddVoiceButton = document.getElementById('cancel-add-voice');
 const actionDropdown = document.getElementById('action-dropdown');
   const apiDropdown = document.getElementById('api-dropdown');
   const deleteDropdown = document.getElementById('delete-dropdown');
+  const uploadSection = document.getElementById('upload-section');
+  const deleteSection = document.getElementById('delete-section');
   let arr = ["Bella", "Antoni", "Elli", "Arnold", "Adam", "Sam","Domi"]
+  showUploadSection();
+  addVoiceButton.addEventListener('click', () => {
+    addVoiceFormContainer.classList.remove('hidden');
+  });
+  
+  cancelAddVoiceButton.addEventListener('click', () => {
+    addVoiceFormContainer.classList.add('hidden');
+  });
 
 
   function showUploadSection() {
-    const uploadSection = document.getElementById('upload-section');
-    const deleteSection = document.getElementById('delete-section');
-    
+ 
     uploadSection.classList.remove('hidden');
     deleteSection.classList.add('hidden');
   }
   
   actionDropdown.addEventListener('change', function() {
-    const uploadSection = document.getElementById('upload-section');
-    const deleteSection = document.getElementById('delete-section');
-    
+
     if (this.value === 'upload') {
       showUploadSection();
     } else if (this.value === 'delete') {
@@ -29,8 +35,7 @@ const actionDropdown = document.getElementById('action-dropdown');
     }
   });
   
-  // Show the upload section by default when the page loads
-  showUploadSection();
+  
 
   function clearDropdownOptions(dropdown) {
     while (dropdown.options.length > 0) {
@@ -41,7 +46,7 @@ const actionDropdown = document.getElementById('action-dropdown');
 // Populate API voices dropdown
 populateApiVoicesDropdown();
 export async function populateApiVoicesDropdown() {
-console.log('populating voices');
+
 
 clearDropdownOptions(deleteDropdown);
 clearDropdownOptions(apiDropdown);
@@ -76,8 +81,6 @@ deleteVoiceForm.addEventListener('submit', async (e) => {
   const deleteDropdown = document.getElementById('delete-dropdown');
   const voiceName = deleteDropdown.options[deleteDropdown.selectedIndex].text;
   const voiceIds = deleteDropdown.options[deleteDropdown.selectedIndex].value;
-  console.log(voiceName);
-  console.log(voiceIds)
   try {
     const response = await fetch('/api/delete', {
       method: 'DELETE',
@@ -89,8 +92,14 @@ deleteVoiceForm.addEventListener('submit', async (e) => {
     if (response.ok) {
 
       await populateApiVoicesDropdown() 
+
+      const voiceButtons = document.querySelectorAll('.famousPerson-select-item');
+      voiceButtons.forEach((voiceButton) => {
+        if (voiceButton.getAttribute('data-name') === voiceName) {
+          voiceButton.remove();
+        }
+      });
       alert(voiceName +' deleted successfully!');
- 
    
     } else {
       alert('Failed to delete the voice. Please try again.');
@@ -101,13 +110,7 @@ deleteVoiceForm.addEventListener('submit', async (e) => {
   }
 });
 
-addVoiceButton.addEventListener('click', () => {
-  addVoiceFormContainer.classList.remove('hidden');
-});
 
-cancelAddVoiceButton.addEventListener('click', () => {
-  addVoiceFormContainer.classList.add('hidden');
-});
 
 
 const uploadVoiceForm = document.getElementById('upload-voice-form');

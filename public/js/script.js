@@ -101,6 +101,7 @@ function toggleAudioModeText(){
 
 
 /////////////////////////////////////////////////////////////////////////////
+let r =  '';
 async function send(name, person, question,skipAudio) {
   const respond = await fetch(name, {
     method: 'POST',
@@ -112,8 +113,13 @@ async function send(name, person, question,skipAudio) {
 
   if (respond.status === 403) {
  
-    const r = createMessageElement("You have reached your character limit. Please upgrade to a premium account to continue using the service.","ai")
-addToChatLog(r);
+     r ="You have reached your character limit. Please upgrade to a premium account to continue using the service, but the  **Text Only** mode is still available.";
+
+     const userMessage = createMessageElement(r, 'ai');
+addToChatLog(userMessage);
+
+//stop function
+    
   }
   return respond;
 }
@@ -179,15 +185,20 @@ async function handleSubmit() {
   typingIndicator.remove();
 
   let aiMessage = '';
-  if (generatedText === 'You have reached your character limit. Please upgrade to a premium account to continue using the service.') {
-    aiMessage = createMessageElement(generatedText, 'ai');
+
+
+  if (r === "You have reached your character limit. Please upgrade to a premium account to continue using the service, but the  **Text Only** mode is still available.") {
+    r = '';
+
+    
   } else {
+    
     aiMessage = skipAudio
       ? createMessageElement(generatedText, 'ai')
       : createMessageElement(generatedText, 'ai', audioUrl);
       addToChatLog(aiMessage);
   } 
-  console.log('Generated text:', generatedText, 'Audio URL:', audioUrl);
+
 
 
 

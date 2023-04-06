@@ -1,5 +1,5 @@
 import { handleFamousPersonSelect } from './script.js';
-import { addVoiceButton,populateApiVoicesDropdown } from './fourmUpload.js';
+import { addVoiceButton } from './fourmUpload.js';
 export function createVoiceButton(voiceName) {
     // Add the new person to the conversationHistory object
   
@@ -49,15 +49,14 @@ export function createVoiceButton(voiceName) {
     input.click(); 
   }
 
-  function handleDeleteButtonClick(event, voiceButton) {
+  export function handleDeleteButtonClick(event, voiceButton) {
     event.stopPropagation();
     if (confirm('Are you sure you want to delete this voice?')) {
       voiceButton.remove();
       const option = document.createElement('option');
       const voiceName = voiceButton.getAttribute('data-name');
       option.text = voiceName;
-      
-      populateApiVoicesDropdown();
+
       
     }
   }

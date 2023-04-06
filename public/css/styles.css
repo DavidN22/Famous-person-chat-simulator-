@@ -128,49 +128,6 @@ input:checked+.slider:before {
 }
 
 
-
-
-.slider2 {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-}
-
-.slider2:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: 0.4s;
-}
-
-
-
-
-input:checked+.slider2 {
-  background-color: rgb(47, 16, 185);
-}
-
-input:checked+.slider2:before {
-  transform: translateX(26px);
-}
-
-.slider2.round {
-  border-radius: 34px;
-}
-
-.slider2.round:before {
-  border-radius: 50%;
-}
-
 .tooltip-text {
   visibility: hidden;
   width: 120px;
@@ -271,7 +228,7 @@ body {
   padding: 19px;
   background-color: #3b3e49;
   overflow-y: scroll;
-  border-radius: 5px;
+ 
 }
 
 .famousPerson-select-item {
@@ -339,7 +296,6 @@ body {
   align-self: flex-end;
   border-radius: 18px 18px 3px 18px;
   margin-left: auto;
-  /* Move user response to the right */
 }
 
 .ai-message {
@@ -350,14 +306,11 @@ body {
   align-self: flex-start;
   border-radius: 18px 18px 18px 3px;
   margin-right: auto;
-  /* Move bot response to the left */
   max-width: 75%;
-  /* Limit width of chat bubble */
 }
 
 .message-text {
   display: inline-block;
-  /* color: black; */
 }
 
 .mute-button {
@@ -420,13 +373,52 @@ button:hover {
 }
 
 
+.slider2 {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+.slider2:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+
+
+
+input:checked+.slider2 {
+  background-color: rgb(47, 16, 185);
+}
+
+input:checked+.slider2:before {
+  transform: translateX(26px);
+}
+
+.slider2.round {
+  border-radius: 34px;
+}
+
+.slider2.round:before {
+  border-radius: 50%;
+}
 
 .typing-indicator {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 36px;
-  /* Adjust this value to change the height of the typing indicator container */
   min-width: 50px;
 }
 
@@ -513,7 +505,6 @@ button:hover {
   display: flex;
   align-items: center;
   width: 100%;
-  /* height: 9%; */
   margin-right: 20px;
   border-radius: 10px;
   margin-top: 49px;
@@ -522,28 +513,16 @@ button:hover {
 textarea {
 
   background-color: #222;
-
   color: #ccc;
-
   padding: 15px;
-
   width: 100%;
-
   height: 69px;
-  /* Adjust this value according to your desired textarea height */
-
   font-size: 16px;
-
   resize: none;
-  /* Disable resizing of textarea */
-
   padding-right: 38px;
-
   border: none;
-
   border-radius: 5px;
 
-  /* margin-top: 1px; */
 }
 
 .button-Container {
@@ -556,16 +535,12 @@ textarea {
   z-index: 1;
   margin-top: -13px;
   display: flex;
-  /* position: absolute; */
 }
 
 
 #clear-button {
   right: 10px;
   z-index: 1;
-  /* display: flex; */
-  /* position: absolute; */
-  /* margin-top: 8px; */
 }
 
 .controls {
@@ -649,22 +624,25 @@ label {
 }
 
 .holding-container {
-  height: 370px;
+  height: 385px;
   position: relative;
   padding: 20px;
   background-color: rgba(40, 40, 40, 0.8);
   border-radius: 5px;
+  align-items: right;
   justify-content: right;
 }
 
 #cancel-add-voice {
 
-  position: absolute;
-  right: 0;
-  margin-right: 20px;
-  margin-top: 30px;
-  width: 20%;
+position: absolute;
+right: 0;
+margin-right: 20px;
+margin-top: 17px;
 
+
+
+width: 20%;
 }
 
 #api-dropdown {

@@ -80,9 +80,6 @@ app.get('/userInfo', express.json(), async (req,res) => {
     const voiceName = req.body.name;
     const voiceFiles = req.files;
   
-    console.log('Received voice name:', voiceName);
-    console.log('Received voice files:', voiceFiles);
-  
     try {
       const formData = new FormData();
       formData.append('name', voiceName);
@@ -129,7 +126,7 @@ app.get('/userInfo', express.json(), async (req,res) => {
 //delete route elevenlabs
 app.delete('/api/delete',  express.json(),async (req, res) => {
   const voiceId = req.body.voiceIds;
-  console.log(voiceId);
+ 
   try {
     const response = await axios.delete(`https://api.elevenlabs.io/v1/voices/${voiceId}`, {
       headers: {
@@ -170,7 +167,7 @@ conversationHistory[person].push({ role: 'user', content: question });
   const generatedText = completions.data.choices[0].message.content;
   conversationHistory[person].push({ role: 'AI', content: generatedText });
 
-  console.log(conversationHistory);
+ 
   return generatedText;
 }
 

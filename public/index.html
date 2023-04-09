@@ -8,8 +8,9 @@
   <link rel="shortcut icon" href="#">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-dark.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+  <link href='https://unpkg.com/css.gg@2.0.0/icons/css/mic.css' rel='stylesheet'>
 </head>
-
 
 <body>
   <header>
@@ -21,9 +22,10 @@
       <div class="right-section">
 
         <span class="dark-mode-tooltip">
-  ?
-  <span class="tooltip-text">Toggle Dark Mode</span>
-</span>
+          ?
+          <span class="tooltip-text">Toggle Dark Mode</span>
+
+        </span>
         <label for="dark-mode-switch" class="switch">
           <input type="checkbox" id="dark-mode-switch">
           <span class="slider round"></span>
@@ -33,112 +35,123 @@
       </div>
     </div>
   </header>
-  <div class="container">
-    <div class="famousPerson-select-container">
-      <input id = "searchbar" type="text" placeholder="search">
-      <button id="add-voice-button" class="add-voice-button">Add AI / User</button>
-      
+  <nav class="responsive-navbar">
+    <div class="navbar-content">
+      <span class="navbar-toggler" id="navbar-toggler">&#9776;</span>
+      <div class="famousPerson-select-container-responsive" id="famousPerson-select-container-responsive">
+        <input id="searchbar" type="text" placeholder="search">
 
-      <!-- Add more famousPersons here -->
+        <div class="famousPerson-select-item" data-name="Trump">
+          <img src="famousPersonPictures/Donald_Trump_circle.png">Trump
+        </div>
+
+        <div class="famousPerson-select-item" data-name="Joe Rogan">
+          <img src="famousPersonPictures/joeRogan.png">Joe Rogan
+        </div>
+
+        <div class="famousPerson-select-item" data-name="Ben Shapiro">
+          <img src="famousPersonPictures/benShapiro.jpg">Ben Shapiro
+        </div>
+
+        <div class="famousPerson-select-item" data-name="Morgan Freeman">
+          <img src="famousPersonPictures/morganFreeman.jpg">Morgan Freeman
+        </div>
+
+        <div class="famousPerson-select-item" data-name="Elon Musk">
+          <img src="famousPersonPictures/elonMusk.jpg">Elon Musk
+        </div>
+
+        <div class="famousPerson-select-item" data-name="Jordan Peterson">
+          <img src="famousPersonPictures/peterson.jpg">Jordan Peterson
+        </div>
+      </div>
     </div>
+  </nav>
+  <div class="container">
+
+   
+    <div class="famousPerson-select-container">
+      <input id="searchbar" type="text" placeholder="search">
+
+      <div class="famousPerson-select-item" data-name="Trump">
+        <img src="famousPersonPictures/Donald_Trump_circle.png">Trump
+      </div>
+
+      <div class="famousPerson-select-item" data-name="Joe Rogan">
+        <img src="famousPersonPictures/joeRogan.png">Joe Rogan
+      </div>
+
+
+      <div class="famousPerson-select-item" data-name="Ben Shapiro">
+        <img src="famousPersonPictures/benShapiro.jpg">Ben Shapiro
+
+      </div>
+
+      <div class="famousPerson-select-item" data-name="Morgan Freeman">
+        <img src="famousPersonPictures/morganFreeman.jpg">Morgan Freeman
+      </div>
+
+      <div class="famousPerson-select-item" data-name="Elon Musk">
+        <img src="famousPersonPictures/elonMusk.jpg">Elon Musk
+      </div>
+
+      <div class="famousPerson-select-item" data-name="Jordan Peterson">
+        <img src="famousPersonPictures/peterson.jpg">Jordan Peterson
+      </div>
+
+    </div>
+
+
     <div class="chat-container">
-      <div class="chat-log" id="chat-log">
-        <div class="typing-indicator" id="typing-indicator" style="display:none;">
-          <span></span>
-          <span></span>
-          <span></span>
+      <div class="chat-log-container">
+        <div class="chat-log" id="chat-log">
+
+
+          <div class="typing-indicator" id="typing-indicator" style="display:none;">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <button id="clear-chat-button" class="clear-chat-button">
+            <i class="fas fa-trash"></i>
+
+          </button>
+
         </div>
       </div>
       <div class="controls-Container">
+
         <div class="controls">
+
           <div class="input-container">
+            <span id="character-counts" class="character-counts">0/500</span>
             <textarea id="user-input" placeholder="Send a message..."></textarea>
-           
-            <button id="microphone-button" class="microphone-icon">🎤</button>
-            
+
+            <button id="delete-text-button" class="hidden">x</button>
+            <button id="microphone-button" class="microphone-icon"><i class="gg-mic"></i></button>
+
+          </div>
+          <div class="button-Container">
+
+            <label class="switch2">
+              <input type="checkbox" id="audio-toggle-switch">
+              <span class="slider2 round"></span>
+            </label>
+            <span class="switch-text">Text Only: Off</span>
+            <button id="submit-button">Send</button>
           </div>
 
-          <div class="button-Container">
-           
-              <label class="switch2">
-                <input type="checkbox" id="audio-toggle-switch">
-                <span class="slider2 round"></span>
-              </label>
-              <span class="switch-text">Text Only: Off</span>
-           
-            
-          <button id="submit-button">Send</button>
-          </div>
-          
           <span id="character-count" class="character-count"></span>
         </div>
       </div>
     </div>
-    <title>Modern Voice Form</title>
-    </head>
-    <div id="add-voice-form-container" class="add-voice-form-container hidden">
-      <div class="holding-container">
-        <div class="sections-container">
-          <div id="action-section" class="section">
-            <h3>Add Voice</h3>
-            <form id="action-form">
-              <label for="action-dropdown">Choose Action:</label>
-              <select id="action-dropdown">
-                <option value="upload">Upload Voice</option>
-                <option value="delete">Delete Voice</option>
-              </select>
-            </form>
-    
-            <div id="upload-section" class="hidden">
-              <form id="upload-voice-form">
-                <label for="voice-name">Voice Name:</label>
-                <input type="text" id="voice-name" name="voice-name">
-                <label for="voice-file">Audio File:</label>
-                <input type="file" id="voice-file" name="voice-file">
-                <button type="submit" id="submit-voice-button">Submit</button>
-              </form>
-            </div>
-    
-            <div id="delete-section" class="hidden">
-              <form id="delete-voice-form">
-                <label for="delete-dropdown">Delete Voice:</label>
-                <select id="delete-dropdown">
-                  <!-- The dropdown menu will be populated with available voices to delete -->
-                </select>
-                <button type="delete" id="delete-voice-button">Delete</button>
-              </form>
-            </div>
-    
-          </div>
-    
-          <div class="or-divider">
-            <span>OR</span>
-          </div>
-    
-          <div id="api-section" class="section">
-            <h3>Import from API</h3>
-            <form id="import-api-form">
-              <label for="api-dropdown">API Voices:</label>
-              <select id="api-dropdown">
-                <!-- The dropdown menu will be populated with the API data in the future -->
-              </select>
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-    
-        </div>
-    
-        <button type="button" id="cancel-add-voice">Cancel</button>
-      </div>
-    </div>
-    
 
+    <audio id="mic-on-sound" src="mixkit-select-click-1109.wav" preload="auto"></audio>
     <audio id="audioPlayer" controls style="display: none;"></audio>
-
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/script.js" type="module"></script>
-    <script type="module" src="js/speechRecognition.js"></script>
+    <script src="js/speechRecognition.js" type="module"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </body>

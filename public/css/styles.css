@@ -4,9 +4,9 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 2px solid rgba(63, 154, 182, 0.5);
+  /* border-bottom: 2px solid rgba(63, 154, 182, 0.5); */
   padding: 10px 0;
-
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .header-content {
@@ -29,6 +29,7 @@ header {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-left: 27px;
   padding-right: 30px;
 }
 
@@ -201,8 +202,9 @@ body {
   display: flex;
   flex-direction: row;
   height: 78vh;
-  max-width: 1199px;
+  /* max-width: 1199px; */
   margin: 3% auto;
+  width: 100%;
   justify-content: center;
 }
 
@@ -218,13 +220,13 @@ body {
 
 .famousPerson-select-item:hover {
   background-color: #5e616a;
-
+  cursor: pointer;
 }
 
 
 .famousPerson-select-container {
  
-  width: 20%;
+
   padding: 19px;
   background-color: #3b3e49;
   overflow-y: scroll;
@@ -243,15 +245,19 @@ body {
   border: none;
   font-style: italic;
   opacity: 0.7;
+  align-self: flex-end;
+  margin-left: auto;
 }
 
 .famousPerson-selected {
+  scale :110%;
   background-color: #555;
 
 }
 
 .famousPerson-select-item img:hover {
   opacity: 0.8;
+
   cursor: pointer;
   border: 2px solid #ccc;
 }
@@ -263,11 +269,10 @@ body {
 
 .chat-container {
   height: 100%;
-  width: 54%;
+  width: 41%;
   display: flex;
   flex-direction: column;
   background-color: #3b3e49;
-
 }
 
 .chat-log {
@@ -275,9 +280,9 @@ body {
   flex-grow: 1;
   overflow-y: auto;
   background-color: rgb(255 255 255 / 25%);
-  padding: 10px;
+  padding: 15px;
+  padding-bottom: 42px;
   border-bottom: 2px solid #fff;
- 
 }
 
 .message {
@@ -355,10 +360,9 @@ body {
 
 
 
-button:hover {
+button:not(.microphone-icon-pressed):hover {
   background-color: #555;
 }
-
 
 
 .flip {
@@ -462,13 +466,44 @@ input:checked+.slider2:before {
   bottom: 0;
 }
 
+.microphone-icon {
+ 
+  scale: 89%;
+  /* transform: scale(0.55); */
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  outline: none;
+  margin: 0px;
+  position: absolute;
+  right: 12px;
+  bottom: 0px;
+  z-index: 1;
+  padding: 10px;
+}
+
+
+.microphone-icon:not(.microphone-icon-pressed):hover {
+  background-color: #555;
+  /* padding: 22px; */
+}
+.microphone-icon-pressed {
+  background-color: rgba(255, 0, 0, 1); /* Full red background */
+}
+
+.microphone-on {
+  animation: pulse 1s infinite;
+}
+
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
   }
 
   70% {
-    box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+    box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
   }
 
   100% {
@@ -476,35 +511,12 @@ input:checked+.slider2:before {
   }
 }
 
-.microphone-on {
-  animation: pulse 2s infinite;
-
-}
-
-.microphone-icon {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  right: 3px;
-  bottom: 3px;
-  z-index: 1;
-}
-
-.microphone-icon:hover {
-  color: red;
-}
-
 .input-container {
   background-color: #222;
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 124%;
   margin-right: 20px;
   border-radius: 10px;
   margin-top: 49px;
@@ -512,17 +524,27 @@ input:checked+.slider2:before {
 
 textarea {
 
-  background-color: #222;
-  color: #ccc;
-  padding: 15px;
-  width: 100%;
-  height: 69px;
-  font-size: 16px;
-  resize: none;
-  padding-right: 38px;
-  border: none;
-  border-radius: 5px;
+background-color: #222;
 
+color: #ccc;
+
+padding: 15px;
+
+width: 100%;
+
+height: 69px;
+
+font-size: 16px;
+
+resize: none;
+
+padding-right: 40px;
+
+border: none;
+
+border-radius: 5px;
+
+/* padding-bottom: 38px; */
 }
 
 .button-Container {
@@ -559,7 +581,6 @@ button {
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-
 }
 
 /*----------------------------------------------------------------------------------------------------------------*/
@@ -578,7 +599,7 @@ button {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .add-voice-button {
@@ -657,69 +678,12 @@ width: 20%;
   background-color: rgba(255, 255, 255, 0.3);
   border: none;
   transition: all 0.3s ease;
-  /* Add this line for the transition effect */
   color: rgba(255, 255, 255, 0.3);
   ;
 }
 
-/*----------------------------------------responsive code----------------------------------------------------*/
-@media only screen and (max-width: 540px) {
-  .container {
-    flex-direction: column;
-    height: auto;
-    max-width: 100%;
-    margin: 0;
-  }
-
-  .famousPerson-select-container {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .chat-container {
-    width: 100%;
-  }
-
-  .sections-container {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .section {
-    flex: none;
-    width: 100%;
-  }
-
-  .or-divider {
-    display: none;
-  }
-
-  .holding-container {
-    width: 100%;
-    height: auto;
-    padding: 10px;
-  }
-
-  #cancel-add-voice {
-    width: 100%;
-    margin-top: 20px;
-    margin-right: 0;
-  }
-}
-
-
-
-
-
-
-
-
 .controls-Container {
-
   padding: 0px 25px 17px 25px;
-
-  /* height: 19%; */
-
   margin-top: -17px;
 }
 
@@ -734,36 +698,11 @@ width: 20%;
   color: #fff;
   background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_search.png);
   background-repeat: no-repeat;
-  background-position: 142px;
+  background-position: 169px;
   background-size: 40px;
-
 }
 
-.delete-button {
-
-
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: #7a6564;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  outline: none;
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  opacity: 0;
-
-}
+#delete-text-button {background-color: #7a6564;border: none;font-size: 18px;margin-bottom: 33px;margin-right: 15px;right: 3px;outline: none;color: white;width: 24px;height: 24px;border-radius: 50%;text-align: center;line-height: 24px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);display: flex;position: absolute;justify-content: center;align-items: center;padding: 0;}
 
 
 
@@ -771,12 +710,11 @@ width: 20%;
   opacity: 1;
 }
 
-.delete-button:hover {
+#delete-text-button:hover {
   background-color: #911d1d;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
-/*----------------------------------------header style/switch----------------------------------------------------*/
 
 .switch-text{
 position: absolute;
@@ -785,16 +723,12 @@ margin-left: 21px;
 }
 html.dark-mode body {
   background-color: #333;
-  /* Or any other dark background color */
   color: #f1f1f1;
-  /* Or any other light text color */
 
 }
 
 html.dark-mode body header {
-
   border-bottom-color: rgba(255, 255, 0, 0.459);
-  /* Adjust border color in dark mode */
 }
 
 body,
@@ -817,4 +751,206 @@ header {
   visibility: visible;
   opacity: 1;
 }
+
+/*----------------------------------------new sti----------------------------------------------------*/
 .switch2{position: relative;display: inline-block;width: 60px;height: 34px;margin-top: 0px;margin-bottom: 24px;}
+
+.chat-log-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto; /* Adjust this value based on your layout requirements */
+}
+
+
+
+.clear-chat-button {
+  position: absolute;
+  bottom: 8px;
+  right: 23px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 8px;
+}
+
+
+.clear-chat-button:focus {
+  outline: none;
+}
+
+.chat-log {
+  flex-grow: 1;
+  overflow-y: auto;
+  /* Add any other styling as required */
+}
+
+
+.character-counts {
+  display: inline-block;
+  margin-left: 2px;
+  /* bottom: 2px; */
+  font-size: 0.9em;
+  margin-top: 88px;
+  position: absolute;
+}
+
+.character-counts.shake {
+  animation: shake 1s;
+  color: red;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+
+
+
+
+.responsive-navbar {
+  display: none;
+  position: fixed;
+  /* top: 0; */
+  /* left: 0; */
+  width: 100%;
+  background-color: #3b3e49;
+  z-index: 1000;
+}
+
+.navbar-content {
+  /* display: flex; */
+  /* width: 49%; */
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+}
+
+.navbar-toggler {
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.famousPerson-select-container-responsive {
+  display: none;
+  flex-direction: column;
+  background-color: #3b3e49;
+  padding: 10px 20px;
+}
+
+.famousPerson-select-container-responsive.active {
+  display: flex;
+}
+
+
+@media screen and (max-width: 1075px) {
+
+  .chat-container {
+    height: 100%;
+    width: fit-content;  
+}
+
+}
+@media screen and (max-width: 587px) {
+
+  
+  .famousPerson-select-container {
+    display: none;
+  }
+  h1 {
+    color: #fff;
+    font-size: 18px;
+    margin: 0;
+}
+  .responsive-navbar {
+    display: block;
+  }
+
+  .chat-container {
+    height: 100%;
+   width: fit-content;
+    display: flex;
+    flex-direction: column;
+    background-color: #3b3e49;
+    margin-top: 43px;
+}
+
+#searchbar {
+  background-image: none;
+}
+
+.header-content {
+  display: block;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.dark-mode-tooltip {
+ display: none;
+}
+
+@media screen and (max-width: 540px) {
+  .chat-container {
+    height: 103%;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .chat-container {
+    height: 104.35%; 
+}
+}
+}
+
+@media screen and (max-width: 393px) { 
+  .switch-text {
+    font-size: 14px;
+}
+  .chat-container {
+    height: 103%;
+}
+
+}
+
+@media screen and (max-width: 375px) {
+
+  .chat-container {
+    height: 98%;  
+}
+
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid rgba(63, 154, 182, 0.5);
+  height: 103px;
+}
+
+
+}
+
+@media screen and (max-width: 360px) {
+  
+  .chat-container {
+    height: 103.2%;
+    margin-top: 43px;
+
+}
+
+
+
+}

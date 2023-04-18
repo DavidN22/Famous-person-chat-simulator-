@@ -148,7 +148,10 @@ async function get() {
 }
 
 // Initialize speech recognition
-initializeSpeechRecognition(userInput, toggleButton);
+if (typeof initializeSpeechRecognition === 'function') {
+  initializeSpeechRecognition(userInput, toggleButton);
+}
+
 
 
 // Variable to store the current famous person

@@ -202,9 +202,9 @@ body {
   display: flex;
   flex-direction: row;
   height: 78vh;
-   max-width: 1520px; 
+  max-width: 1500px; 
   margin: 3% auto;
-  width: 100%;
+ 
   justify-content: center;
 }
 
@@ -226,7 +226,7 @@ body {
 
 .famousPerson-select-container {
  
-
+  width: 17.2%;
   padding: 19px;
   background-color: #3b3e49;
   overflow-y: scroll;
@@ -268,7 +268,7 @@ body {
 
 
 .chat-container {
-  max-width: 39%;
+  max-width: 37%;
   height: 100%;
   display: flex;
   flex-direction: column;

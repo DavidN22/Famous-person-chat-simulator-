@@ -11,6 +11,7 @@ const chatLog = document.getElementById('chat-log');
 const characterCountElement = document.getElementById('character-count');
 const toggleButton = document.getElementById('microphone-button');
 const searchbar = document.getElementById('searchbar');
+const searchbar2 = document.getElementById('searchbar2');
 const darkModeSwitch = document.getElementById('dark-mode-switch');
 const darkModeText = document.querySelector('.dark-mode-text');
 const audioToggleSwitch = document.getElementById('audio-toggle-switch');
@@ -19,6 +20,52 @@ const clearChatButton = document.getElementById('clear-chat-button');
 const characterCount = document.getElementById('character-counts');
 const deleteButton = document.getElementById("delete-text-button");
 
+searchbar.addEventListener('input', filterFamousPersonButtons);
+if (searchbar2) {
+searchbar2.addEventListener('input', filterFamousPersonButtons);
+}
+
+function filterFamousPersonButtons(event) {
+  const searchText = event.target.value.toLowerCase();
+  const famousPersonButtons = document.querySelectorAll('.famousPerson-select-item');
+  famousPersonButtons.forEach(button => {
+    const buttonName = button.getAttribute('data-name').toLowerCase();
+    if (buttonName.includes(searchText)) {
+      button.style.display = 'flex';
+    } else {
+      button.style.display = 'none';
+    }
+  });
+}
+document.addEventListener("DOMContentLoaded", function () {
+  // Get the modal and the close button
+  const disclaimerModal = document.getElementById("disclaimerModal");
+  const closeButton = document.querySelector(".close");
+
+  // Show the modal with a fade-in effect when the page loads
+  disclaimerModal.style.display = "block";
+  setTimeout(() => {
+    disclaimerModal.style.opacity = 1;
+  }, 100);
+
+  // Close the modal with a fade-out effect when the close button is clicked
+  closeButton.onclick = function () {
+    disclaimerModal.style.opacity = 0;
+    setTimeout(() => {
+      disclaimerModal.style.display = "none";
+    }, 500);
+  };
+
+  // Close the modal with a fade-out effect when the user clicks anywhere outside of the modal content
+  window.onclick = function (event) {
+    if (event.target == disclaimerModal) {
+      disclaimerModal.style.opacity = 0;
+      setTimeout(() => {
+        disclaimerModal.style.display = "none";
+      }, 500);
+    }
+  };
+});
 
 
 const navbarToggler = document.getElementById('navbar-toggler');
@@ -148,18 +195,7 @@ userInput.addEventListener('keydown', (e) => {
 });
 
 // Attach the input event to the search bar for filtering famous person buttons
-searchbar.addEventListener('input', function () {
-  const searchText = searchbar.value.toLowerCase();
-  const famousPersonButtons = document.querySelectorAll('.famousPerson-select-item');
-  famousPersonButtons.forEach(button => {
-    const buttonName = button.getAttribute('data-name').toLowerCase();
-    if (buttonName.includes(searchText)) {
-      button.style.display = 'flex';
-    } else {
-      button.style.display = 'none';
-    }
-  });
-});
+
 
 // Attach the change event to the dark mode switch
 darkModeSwitch.addEventListener('change', toggleDarkMode);
@@ -175,7 +211,7 @@ audioToggleSwitch.addEventListener('change', toggleAudioModeText);
 
 // Function to toggle the text only mode
 function toggleAudioModeText() {
-  audioToggleText.textContent = "Text Only: " + (audioToggleSwitch.checked ? "On" : "Off");
+  audioToggleText.textContent = "Text-Only: " + (audioToggleSwitch.checked ? "On" : "Off");
 }
 
 let r = '';
@@ -259,23 +295,19 @@ async function handleSubmit() {
 
     const jsonResponse = await response.text();
     generatedText = jsonResponse;
-
+ audioUrl = null;
 
   } else {
 
     audioUrl = await processAudioResponse(response);
-    playAIResponseAudio(audioUrl);
+  
     const textResponse = await send('/api/text');
     generatedText = await textResponse.text();
+
+    audioUrl = playAIResponseAudio(audioUrl, chatLog);
   }
 
-  // Remove the previous mute and replay buttons
-  const previousMuteButton = chatLog.querySelector('.mute-button');
-  const prevousReplayButton = chatLog.querySelector('.replay-button');
-  if (previousMuteButton) {
-    previousMuteButton.remove();
-    prevousReplayButton.remove();
-  }
+
 
   // Remove the typing indicator
   typingIndicator.remove();
@@ -283,27 +315,25 @@ async function handleSubmit() {
   // Display the AI's response in the chat log
   let aiMessage = '';
 
-// This sets aiMessage based on the value of skipAudio if skipAudio is true, then aiMessage =createMessageElement(generatedText, 'ai') 
-//else  createMessageElement(generatedText, 'ai', audioUrl);
-  aiMessage = skipAudio
-    ? createMessageElement(generatedText, 'ai')
-    : createMessageElement(generatedText, 'ai', audioUrl);
-  addToChatLog(aiMessage);
+aiMessage =  createMessageElement(generatedText, 'ai')
+
+//const audioPlayer = skipAudio ? null : playAIResponseAudio(audioUrl, chatLog);
+addToChatLog(aiMessage, audioUrl);
 
 
-  // Execute the 'get' function
   await get();
-
-  // Reset the loading state on the submit button
   resetloadingButton()
-
-  // Focus the user input field
   userInput.focus();
 
 }
 // Function to handle the submission of a user's question
-function addToChatLog(messageElement) {
+function addToChatLog(messageElement, audioElement = null) {
   chatLog.appendChild(messageElement);
+  if (audioElement) {
+    chatLog.appendChild(audioElement);
+    
+    audioElement.play();
+  }
   chatLog.scrollTop = chatLog.scrollHeight;
 }
 
@@ -313,3 +343,4 @@ function resetloadingButton() {
   submitButton.classList.remove('loading-button');
   submitButton.disabled = false;
 }
+

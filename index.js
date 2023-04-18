@@ -109,7 +109,7 @@ async function getChatGPTResponse(person, question) {
     model: MODEL_NAME,
     messages: [{ role: 'user', content: prompt }],
     n: 1,
-    max_tokens: 10,
+ 
   });
 
   // Extract the generated text from the completions

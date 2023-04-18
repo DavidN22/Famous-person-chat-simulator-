@@ -17,7 +17,7 @@
     <div class="header-content">
       <div class="left-section">
         <h1>Famous Person Simulator</h1>
-        <p>Made by David Naymon</p>
+        <p><a href="mailto:naymondavid@gmail.com" target="_blank" rel="noopener noreferrer">Made by David Naymon</a></p>
       </div>
       <div class="right-section">
 
@@ -39,7 +39,7 @@
     <div class="navbar-content">
       <span class="navbar-toggler" id="navbar-toggler">&#9776;</span>
       <div class="famousPerson-select-container-responsive" id="famousPerson-select-container-responsive">
-        <input id="searchbar" type="text" placeholder="search">
+        <input id="searchbar2" type="text" placeholder="search">
 
         <div class="famousPerson-select-item" data-name="Trump">
           <img src="famousPersonPictures/Donald_Trump_circle.png">Trump
@@ -74,7 +74,7 @@
       <input id="searchbar" type="text" placeholder="search">
 
       <div class="famousPerson-select-item" data-name="Trump">
-        <img src="famousPersonPictures/Donald_Trump_circle.png">Trump
+        <img src="famousPersonPictures/Donald_Trump_circle.png"> Trump
       </div>
 
       <div class="famousPerson-select-item" data-name="Joe Rogan">
@@ -138,7 +138,7 @@
               <input type="checkbox" id="audio-toggle-switch">
               <span class="slider2 round"></span>
             </label>
-            <span class="switch-text">Text Only: Off</span>
+            <span class="switch-text">Text-Only: Off</span>
             <button id="submit-button">Send</button>
           </div>
 
@@ -154,6 +154,16 @@
     <script src="js/speechRecognition.js" type="module"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+
+    <div id="disclaimerModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id ="disc">Disclaimer</h2>
+        <p id="disclaimer">Please note that if you reach the character limit, you may continue using my Text-Only mode with no limit. Should you have any concerns or require assistance, kindly reach out to me via email by clicking on the link associated with my name in the header. I am always happy to help.
+          
+        </p>
+      </div>
+    </div>
 </body>
 
 </html>

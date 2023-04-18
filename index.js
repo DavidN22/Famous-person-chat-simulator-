@@ -99,7 +99,7 @@ async function getChatGPTResponse(person, question) {
 
   // Prepare the conversation history and prompt
   const history = conversationHistory[person].map(entry => entry.content).join('\n');
-  const prompt = `As ${person}, answer this question in his style, considering the previous conversation and using language that feels natural for him, occasionally using profanity when you believe it necessary, also dont mistype profanity, spell it out if you use it:\n\n${history}\n\nQuestion: "${question}"\n\n`;
+  const prompt = `As ${person}, answer this question in his style, considering the previous conversation and using language that feels natural for him, occasionally using profanity when you believe it necessary, try to keep it short and to the point:\n\n${history}\n\nQuestion: "${question}"\n\n`;
 
   // Add the question to the conversation history
   conversationHistory[person].push({ role: 'user', content: question });
@@ -109,6 +109,7 @@ async function getChatGPTResponse(person, question) {
     model: MODEL_NAME,
     messages: [{ role: 'user', content: prompt }],
     n: 1,
+   
  
   });
 
@@ -201,18 +202,16 @@ async function getUserInfo(ipAddress) {
     'xi-api-key': ELEVEN_API_KEY,
   };
   const response = await axios.get(url, { headers });
- 
+  const remainingCharactersz = response.data.subscription.character_limit - response.data.subscription.character_count;
     const remainingCharacters = response.data.subscription.character_limit - response.data.subscription.character_count;
     const characterLimit = remainingCharacters >= 2000 ? 2000 : 0;
 
-if (ipAddress === '::1') {
-return response.data.subscription;
-}
+
     return {
       character_limit: characterLimit,
       character_count: ipCharacterCounts[ipAddress],
       subscription: response.data.subscription,
-      overall_remaining_characters: remainingCharacters,
+      overall_remaining_characters: remainingCharactersz,
     };
 
 }
@@ -223,17 +222,13 @@ async function checkCharacterLimit(req) {
   const ipAddress = req.ip;
   const data = await getUserInfo(ipAddress);
 
-  if (data.character_limit - data.character_count < 2000 && ipAddress === '::1') {
+
+  if (data.overall_remaining_characters< 2000) {
+    console.log("hit");
     sendEmailNotification();
     return false;
   }
-  if (data.overall_remaining_characters< 2000 && ipAddress !== '::1') {
-    sendEmailNotification();
-    return false;
-  }
-if (ipAddress === '::1') {
-return true;
-}
-  const isWithinLimit = ipCharacterCounts[ipAddress] < 80;
+
+  const isWithinLimit = ipCharacterCounts[ipAddress] < 2000;
   return isWithinLimit;
 }

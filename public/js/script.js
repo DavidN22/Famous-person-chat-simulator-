@@ -268,7 +268,7 @@ async function handleSubmit() {
   characterCount.textContent = `0/500`;
 
   // Show a loading state on the submit button
-  submitButton.innerHTML = `<div class="loader">Wait...</div>`;
+  submitButton.innerHTML = `<div class="loader">Send</div>`;
   submitButton.classList.add('loading-button');
   submitButton.disabled = true;
 

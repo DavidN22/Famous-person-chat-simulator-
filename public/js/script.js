@@ -121,13 +121,30 @@ function clearInput() {
 // Clear chat log when clear chat button is clicked
 clearChatButton.addEventListener('click', clearChat);
 
-function clearChat() {
+async function clearChat() {
   if (confirm("Are you sure you want to clear the chat?")) {
     chatLog.innerHTML = '';
     chatLog.appendChild(clearChatButton);
+
+    // Send a DELETE request to the server to delete the user's conversation history
+    await fetch('/api/history', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }
 
+window.addEventListener('beforeunload', (event) => {
+  // Send a DELETE request to the server to delete the user's conversation history
+  fetch('/api/history', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+});
 // Fetch user information and update remaining characters
 await get();
 

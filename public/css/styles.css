@@ -226,7 +226,6 @@ body {
 
 .famousPerson-select-container {
  
-  width: 17.2%;
   padding: 19px;
   background-color: #3b3e49;
   overflow-y: scroll;
@@ -910,6 +909,7 @@ header {
   .chat-container {
     height: 100%;
     width: fit-content;  
+    max-width: 100%;
 }
 
 }
@@ -938,6 +938,8 @@ header {
 }
   .responsive-navbar {
     display: block;
+    position: relative;
+    margin-bottom: -55px;
   }
 
   .chat-container {

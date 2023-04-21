@@ -17,9 +17,7 @@ const configuration = new Configuration({
 const nodemailer = require('nodemailer');
 const openai = new OpenAIApi(configuration);
 const app = express();
-const conversationHistory = {
-
-};
+const conversationHistory = {};
 
 app.set('trust proxy', true);
 
@@ -32,6 +30,15 @@ app.listen(PORT, async () => {
 
 } );
 
+app.delete('/api/history', express.json(), async (req, res) => {
+  const ipAddress = req.ip;
+
+  if (conversationHistory.hasOwnProperty(ipAddress)) {
+    delete conversationHistory[ipAddress];
+  }
+
+  res.sendStatus(200);
+});
 
 
 const ipCharacterCounts = {};
@@ -52,7 +59,7 @@ app.post('/api/audio', express.json(), async (req, res) => {
   }
 
   // Get the response from the ChatGPT
-  const responses = await getChatGPTResponse(person, question);
+  const responses = await getChatGPTResponse(person, question,ipAddress);
   responseSave = responses;
 
   if (skipAudio) {
@@ -92,33 +99,35 @@ app.get('/api/voices', async (req, res) => {
 });
 
 // Function to get a response from the ChatGPT
-async function getChatGPTResponse(person, question) {
-  if (!conversationHistory.hasOwnProperty(person)) {
-    conversationHistory[person] = [];
+async function getChatGPTResponse(person, question, ipAddress) {
+  if (!conversationHistory.hasOwnProperty(ipAddress)) {
+    conversationHistory[ipAddress] = {};
+  }
+
+  if (!conversationHistory[ipAddress].hasOwnProperty(person)) {
+    conversationHistory[ipAddress][person] = [];
   }
 
   // Prepare the conversation history and prompt
-  const history = conversationHistory[person].map(entry => entry.content).join('\n');
+  const history = conversationHistory[ipAddress][person].map(entry => entry.content).join('\n');
   const prompt = `As ${person}, answer this question in his style, considering the previous conversation and using language that feels natural for him, occasionally using profanity when you believe it necessary, KEEP IT SHORT AND TO THE POINT:\n\n${history}\n\nQuestion: "${question}"\n\n`;
 
   // Add the question to the conversation history
-  conversationHistory[person].push({ role: 'user', content: question });
+  conversationHistory[ipAddress][person].push({ role: 'user', content: question });
 
   // Send the prompt to the ChatGPT API and receive completions
   const completions = await openai.createChatCompletion({
     model: MODEL_NAME,
     messages: [{ role: 'user', content: prompt }],
     n: 1,
-   
- 
   });
 
   // Extract the generated text from the completions
   const generatedText = completions.data.choices[0].message.content;
 
   // Add the generated text to the conversation history
-  conversationHistory[person].push({ role: 'AI', content: generatedText });
-
+  conversationHistory[ipAddress][person].push({ role: 'AI', content: generatedText });
+console.log(conversationHistory);
   // Return the generated text
   return generatedText;
 }

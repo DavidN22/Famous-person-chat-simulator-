@@ -110,7 +110,7 @@ async function getChatGPTResponse(person, question, ipAddress) {
 
   // Prepare the conversation history and prompt
   const history = conversationHistory[ipAddress][person].map(entry => entry.content).join('\n');
-  const prompt = `As ${person}, answer this question in his style, considering the previous conversation and using language that feels natural for him, occasionally using profanity when you believe it necessary, KEEP IT SHORT AND TO THE POINT:\n\n${history}\n\nQuestion: "${question}"\n\n`;
+  const prompt = `As ${person}, answer this question in his style, considering the previous conversation and using language that feels natural for him, KEEP IT SHORT AND TO THE POINT:\n\n${history}\n\nQuestion: "${question}"\n\n`;
 
   // Add the question to the conversation history
   conversationHistory[ipAddress][person].push({ role: 'user', content: question });
